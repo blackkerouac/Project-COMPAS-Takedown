@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 
 
-<title>Train_on_Entire_Data slides</title>
+<title>Race_Royale_Clean slides</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13242,133 +13242,24 @@ a.anchor-link {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Train-/-Test-on-Entire-Data-Without-&quot;Bias&quot;">Train / Test on Entire Data Without "Bias"<a class="anchor-link" href="#Train-/-Test-on-Entire-Data-Without-&quot;Bias&quot;">&#182;</a></h2>
+<h1 id="Training-Data-on-Specific-Races">Training Data on Specific Races<a class="anchor-link" href="#Training-Data-on-Specific-Races">&#182;</a></h1>
 </div>
 </div>
-</div></section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[127]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">reduced_without_race_dummies</span><span class="p">[[</span><span class="s1">&#39;juve_fel_count&#39;</span><span class="p">,</span> <span class="s1">&#39;priors_count&#39;</span><span class="p">,</span> <span class="s1">&#39;violence&#39;</span><span class="p">,</span> <span class="s1">&#39;drugs&#39;</span><span class="p">,</span> <span class="s1">&#39;theft&#39;</span><span class="p">,</span> <span class="s1">&#39;arrest_case_no_charge&#39;</span><span class="p">,</span> <span class="s1">&#39;traffic&#39;</span><span class="p">,</span> <span class="s1">&#39;disorderly_conduct&#39;</span><span class="p">,</span> <span class="s1">&#39;sexual_misconduct&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_25 - 45&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_Greater than 45&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_Less than 25&#39;</span><span class="p">,</span> <span class="s1">&#39;juv_misd_count&#39;</span><span class="p">,</span> <span class="s1">&#39;prios_count&#39;</span><span class="p">]]</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">reduced_without_race_dummies</span><span class="p">[</span><span class="s1">&#39;two_year_recid&#39;</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[128]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">tree</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[130]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Training Data Score: {rf.score(X_train, y_train)}&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Testing Data Score: {rf.score(X_test, y_test)}&quot;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Training Data Score: 0.7117668893838159
-Testing Data Score: 0.6471897607122983
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[132]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">feature_names</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span>
-<span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">rf</span><span class="o">.</span><span class="n">feature_importances_</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[132]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[(0.2922366192005838, &#39;prios_count&#39;),
- (0.2891649838667777, &#39;priors_count&#39;),
- (0.0676114225969263, &#39;juv_misd_count&#39;),
- (0.06504118882993012, &#39;age_cat_Less than 25&#39;),
- (0.056202064610676734, &#39;juve_fel_count&#39;),
- (0.05430930069885265, &#39;age_cat_Greater than 45&#39;),
- (0.032658543360306554, &#39;age_cat_25 - 45&#39;),
- (0.02567670824349682, &#39;arrest_case_no_charge&#39;),
- (0.025292997746009238, &#39;drugs&#39;),
- (0.0222698244432572, &#39;theft&#39;),
- (0.021861464654920355, &#39;violence&#39;),
- (0.021631337777306137, &#39;traffic&#39;),
- (0.019740711124235595, &#39;disorderly_conduct&#39;),
- (0.006302832846720425, &#39;sexual_misconduct&#39;)]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Confusion-Matrices">Confusion Matrices<a class="anchor-link" href="#Confusion-Matrices">&#182;</a></h2>
+<h1 id="Filter-By-Caucasian">Filter By Caucasian<a class="anchor-link" href="#Filter-By-Caucasian">&#182;</a></h1>
 </div>
 </div>
 </div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[135]:</div>
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X_test_see_no_race</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[[</span><span class="s1">&#39;Prediction&#39;</span><span class="p">,</span> <span class="s1">&#39;Actual&#39;</span><span class="p">]]</span>
-<span class="n">X_test_see_no_race</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">caucasian</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Caucasian&#39;</span><span class="p">]</span>
+<span class="n">caucasian</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13381,7 +13272,7 @@ Testing Data Score: 0.6471897607122983
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[135]:</div>
+    <div class="prompt output_prompt">Out[3]:</div>
 
 
 
@@ -13404,434 +13295,153 @@ Testing Data Score: 0.6471897607122983
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>Prediction</th>
-      <th>Actual</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1315</th>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1893</th>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>6937</th>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>7021</th>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4908</th>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[136]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">joinedDF_trained_no_race</span> <span class="o">=</span> <span class="n">X_test_see_race</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">reducedDF</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
-<span class="n">joinedDF_trained_no_race</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[136]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>race_African-American</th>
-      <th>race_Asian</th>
-      <th>race_Caucasian</th>
-      <th>race_Hispanic</th>
-      <th>race_Native American</th>
-      <th>race_Other</th>
-      <th>Prediction</th>
-      <th>Actual</th>
+      <th>id</th>
       <th>sex</th>
       <th>age</th>
-      <th>...</th>
+      <th>age_cat</th>
+      <th>race</th>
+      <th>juve_fel_count</th>
+      <th>decile_score</th>
+      <th>juv_misd_count</th>
+      <th>juv_other_count</th>
       <th>prios_count</th>
-      <th>violence</th>
-      <th>drugs</th>
-      <th>theft</th>
-      <th>arrest_case_no_charge</th>
-      <th>traffic</th>
-      <th>disorderly_conduct</th>
-      <th>sexual_misconduct</th>
+      <th>...</th>
+      <th>decile_score_a</th>
+      <th>score_text</th>
+      <th>v_type_of_assessment</th>
+      <th>v_decile_score_v</th>
+      <th>v_score_text</th>
       <th>priors_count</th>
+      <th>start</th>
+      <th>end_</th>
+      <th>event</th>
       <th>two_year_recid</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
+      <th>6</th>
+      <td>8</td>
       <td>Male</td>
-      <td>69</td>
-      <td>...</td>
-      <td>0</td>
-      <td>7</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Male</td>
-      <td>34</td>
-      <td>...</td>
-      <td>0</td>
-      <td>7</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Male</td>
-      <td>24</td>
-      <td>...</td>
-      <td>4</td>
+      <td>41</td>
+      <td>25 - 45</td>
+      <td>Caucasian</td>
       <td>0</td>
       <td>6</td>
       <td>0</td>
       <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>4</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Male</td>
-      <td>23</td>
+      <td>14</td>
       <td>...</td>
-      <td>1</td>
-      <td>0</td>
       <td>6</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>Medium</td>
+      <td>Risk of Violence</td>
+      <td>2</td>
+      <td>Low</td>
+      <td>14</td>
+      <td>5</td>
+      <td>40</td>
       <td>1</td>
-      <td>0</td>
+      <td>1</td>
     </tr>
-    <tr>
-      <th>4</th>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>NaN</td>
-      <td>Male</td>
-      <td>43</td>
-      <td>...</td>
-      <td>2</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>4</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>2</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-<p>5 rows × 24 columns</p>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div></section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[137]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">joinedDF_no_na</span> <span class="o">=</span> <span class="n">joinedDF_trained_no_race</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
-<span class="n">joinedDF_no_na</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[137]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>race_African-American</th>
-      <th>race_Asian</th>
-      <th>race_Caucasian</th>
-      <th>race_Hispanic</th>
-      <th>race_Native American</th>
-      <th>race_Other</th>
-      <th>Prediction</th>
-      <th>Actual</th>
-      <th>sex</th>
-      <th>age</th>
-      <th>...</th>
-      <th>prios_count</th>
-      <th>violence</th>
-      <th>drugs</th>
-      <th>theft</th>
-      <th>arrest_case_no_charge</th>
-      <th>traffic</th>
-      <th>disorderly_conduct</th>
-      <th>sexual_misconduct</th>
-      <th>priors_count</th>
-      <th>two_year_recid</th>
-    </tr>
-  </thead>
-  <tbody>
     <tr>
       <th>8</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>10</td>
       <td>Female</td>
       <td>39</td>
+      <td>25 - 45</td>
+      <td>Caucasian</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
       <td>...</td>
+      <td>1</td>
+      <td>Low</td>
+      <td>Risk of Violence</td>
+      <td>1</td>
+      <td>Low</td>
       <td>0</td>
-      <td>7</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
+      <td>2</td>
+      <td>747</td>
       <td>0</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>14</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>Female</td>
-      <td>47</td>
+      <th>9</th>
+      <td>13</td>
+      <td>Male</td>
+      <td>21</td>
+      <td>Less than 25</td>
+      <td>Caucasian</td>
+      <td>0</td>
+      <td>3</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
       <td>...</td>
+      <td>3</td>
+      <td>Low</td>
+      <td>Risk of Violence</td>
+      <td>5</td>
+      <td>Medium</td>
       <td>1</td>
       <td>0</td>
-      <td>0</td>
+      <td>428</td>
+      <td>1</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>14</td>
+      <td>Male</td>
+      <td>27</td>
+      <td>25 - 45</td>
+      <td>Caucasian</td>
       <td>0</td>
       <td>4</td>
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>15</th>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>Male</td>
-      <td>31</td>
       <td>...</td>
-      <td>7</td>
+      <td>4</td>
+      <td>Low</td>
+      <td>Risk of Violence</td>
+      <td>4</td>
+      <td>Low</td>
       <td>0</td>
       <td>0</td>
+      <td>857</td>
       <td>0</td>
-      <td>0</td>
-      <td>3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>7</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>17</th>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>Male</td>
-      <td>25</td>
-      <td>...</td>
-      <td>3</td>
-      <td>0</td>
-      <td>0</td>
-      <td>5</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>3</td>
       <td>0</td>
     </tr>
     <tr>
-      <th>19</th>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>1.0</td>
-      <td>Male</td>
-      <td>31</td>
-      <td>...</td>
-      <td>5</td>
+      <th>12</th>
+      <td>16</td>
+      <td>Female</td>
+      <td>37</td>
+      <td>25 - 45</td>
+      <td>Caucasian</td>
       <td>0</td>
-      <td>6</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>5</td>
       <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>...</td>
+      <td>1</td>
+      <td>Low</td>
+      <td>Risk of Violence</td>
+      <td>1</td>
+      <td>Low</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1186</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
-<p>5 rows × 24 columns</p>
+<p>5 rows × 32 columns</p>
 </div>
 </div>
 
@@ -13840,22 +13450,14 @@ Testing Data Score: 0.6471897607122983
 </div>
 </div>
 
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Confusion-Matrix-.loc-by-Caucasian---Trained-and-Tested-on-no-Race">Confusion Matrix .loc by Caucasian - Trained and Tested on no Race<a class="anchor-link" href="#Confusion-Matrix-.loc-by-Caucasian---Trained-and-Tested-on-no-Race">&#182;</a></h2>
 </div>
-</div>
-</div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[138]:</div>
+<div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">caucasian</span> <span class="o">=</span> <span class="n">joinedDF_no_na</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">joinedDF_no_na</span><span class="p">[</span><span class="s1">&#39;race&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Caucasian&#39;</span><span class="p">]</span>
-<span class="n">caucasian_reduced</span> <span class="o">=</span> <span class="n">caucasian</span><span class="p">[[</span><span class="s1">&#39;race&#39;</span><span class="p">,</span><span class="s1">&#39;Prediction&#39;</span><span class="p">,</span><span class="s1">&#39;Actual&#39;</span><span class="p">]]</span>
-<span class="n">caucasian_reduced</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">caucasian_DF</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">caucasian_reduced</span><span class="p">)</span>
+<span class="n">caucasian_DF</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13868,7 +13470,7 @@ Testing Data Score: 0.6471897607122983
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[138]:</div>
+    <div class="prompt output_prompt">Out[5]:</div>
 
 
 
@@ -13891,41 +13493,119 @@ Testing Data Score: 0.6471897607122983
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>race</th>
-      <th>Prediction</th>
-      <th>Actual</th>
+      <th>age</th>
+      <th>juve_fel_count</th>
+      <th>priors_count</th>
+      <th>violence</th>
+      <th>drugs</th>
+      <th>theft</th>
+      <th>arrest_case_no_charge</th>
+      <th>traffic</th>
+      <th>disorderly_conduct</th>
+      <th>sexual_misconduct</th>
+      <th>two_year_recid</th>
+      <th>juv_misd_count</th>
+      <th>prios_count</th>
+      <th>age_cat_25 - 45</th>
+      <th>age_cat_Greater than 45</th>
+      <th>age_cat_Less than 25</th>
     </tr>
   </thead>
   <tbody>
     <tr>
+      <th>6</th>
+      <td>41</td>
+      <td>0</td>
+      <td>14</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>14</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
       <th>8</th>
-      <td>Caucasian</td>
-      <td>0.0</td>
-      <td>0.0</td>
+      <td>39</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
-      <th>14</th>
-      <td>Caucasian</td>
-      <td>0.0</td>
-      <td>1.0</td>
+      <th>9</th>
+      <td>21</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>5</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>19</th>
-      <td>Caucasian</td>
-      <td>1.0</td>
-      <td>1.0</td>
+      <th>10</th>
+      <td>27</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>6</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
     <tr>
-      <th>23</th>
-      <td>Caucasian</td>
-      <td>0.0</td>
-      <td>0.0</td>
-    </tr>
-    <tr>
-      <th>31</th>
-      <td>Caucasian</td>
-      <td>0.0</td>
-      <td>1.0</td>
+      <th>12</th>
+      <td>37</td>
+      <td>0</td>
+      <td>0</td>
+      <td>7</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
     </tr>
   </tbody>
 </table>
@@ -13937,77 +13617,27 @@ Testing Data Score: 0.6471897607122983
 </div>
 </div>
 
-</div></section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[139]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">confusion_matrix</span>
-<span class="n">y_true_caucasian</span> <span class="o">=</span> <span class="n">caucasian_reduced</span><span class="p">[</span><span class="s1">&#39;Actual&#39;</span><span class="p">]</span>
-<span class="n">y_pred_caucasian</span> <span class="o">=</span> <span class="n">caucasian_reduced</span><span class="p">[</span><span class="s1">&#39;Prediction&#39;</span><span class="p">]</span>
-<span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true_caucasian</span><span class="p">,</span> <span class="n">y_pred_caucasian</span><span class="p">)</span>
-</pre></div>
-
-    </div>
+</div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Train-/-Test-Vars-For-Caucasian">Train / Test Vars For Caucasian<a class="anchor-link" href="#Train-/-Test-Vars-For-Caucasian">&#182;</a></h1>
 </div>
 </div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[139]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([[288,  78],
-       [139, 106]], dtype=int64)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[141]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="n">tn</span> <span class="o">+</span> <span class="n">fp</span> <span class="o">+</span> <span class="n">fn</span> <span class="o">+</span> <span class="n">tp</span> 
-<span class="n">percent_fp</span> <span class="o">=</span> <span class="n">fp</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="n">percent_fn</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Confusion Matrix trained on no race for Caucasian: </span><span class="se">\n</span><span class="s1">Total: </span><span class="si">{total}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Positive: </span><span class="si">{percent_fp}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Negative: </span><span class="si">{percent_fn}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X_train_caucasian</span> <span class="o">=</span> <span class="n">caucasian_DF</span><span class="p">[[</span><span class="s1">&#39;juve_fel_count&#39;</span><span class="p">,</span> <span class="s1">&#39;priors_count&#39;</span><span class="p">,</span> <span class="s1">&#39;violence&#39;</span><span class="p">,</span> <span class="s1">&#39;drugs&#39;</span><span class="p">,</span> <span class="s1">&#39;theft&#39;</span><span class="p">,</span> <span class="s1">&#39;arrest_case_no_charge&#39;</span><span class="p">,</span> <span class="s1">&#39;traffic&#39;</span><span class="p">,</span> <span class="s1">&#39;disorderly_conduct&#39;</span><span class="p">,</span> <span class="s1">&#39;sexual_misconduct&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_25 - 45&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_Greater than 45&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_Less than 25&#39;</span><span class="p">,</span> <span class="s1">&#39;juv_misd_count&#39;</span><span class="p">,</span> <span class="s1">&#39;prios_count&#39;</span><span class="p">]]</span>
+<span class="n">y_train_caucasian</span> <span class="o">=</span> <span class="n">caucasian_DF</span><span class="p">[</span><span class="s1">&#39;two_year_recid&#39;</span><span class="p">]</span>
+
+<span class="n">X_test_caucasian</span> <span class="o">=</span> <span class="n">caucasian_DF</span><span class="p">[[</span><span class="s1">&#39;juve_fel_count&#39;</span><span class="p">,</span> <span class="s1">&#39;priors_count&#39;</span><span class="p">,</span> <span class="s1">&#39;violence&#39;</span><span class="p">,</span> <span class="s1">&#39;drugs&#39;</span><span class="p">,</span> <span class="s1">&#39;theft&#39;</span><span class="p">,</span> <span class="s1">&#39;arrest_case_no_charge&#39;</span><span class="p">,</span> <span class="s1">&#39;traffic&#39;</span><span class="p">,</span> <span class="s1">&#39;disorderly_conduct&#39;</span><span class="p">,</span> <span class="s1">&#39;sexual_misconduct&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_25 - 45&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_Greater than 45&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_Less than 25&#39;</span><span class="p">,</span> <span class="s1">&#39;juv_misd_count&#39;</span><span class="p">,</span> <span class="s1">&#39;prios_count&#39;</span><span class="p">]]</span>
+<span class="n">y_test_caucasian</span> <span class="o">=</span> <span class="n">caucasian_DF</span><span class="p">[</span><span class="s1">&#39;two_year_recid&#39;</span><span class="p">]</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Confusion Matrix trained on no race for Caucasian: 
-Total: 611 
-False Positive: 0.1276595744680851 
-False Negative: 0.22749590834697217
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -14015,450 +13645,22 @@ False Negative: 0.22749590834697217
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Confusion-Matrix-Loc-by-A-A---Trained-and-Tested-on-no-Race">Confusion Matrix Loc by A-A - Trained and Tested on no Race<a class="anchor-link" href="#Confusion-Matrix-Loc-by-A-A---Trained-and-Tested-on-no-Race">&#182;</a></h2>
+<h1 id="Doing-Tests-With-White-Train">Doing Tests With White Train<a class="anchor-link" href="#Doing-Tests-With-White-Train">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[143]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">confusion_matrix</span>
-<span class="n">y_true_african_american</span> <span class="o">=</span> <span class="n">african_american_reduced</span><span class="p">[</span><span class="s1">&#39;Actual&#39;</span><span class="p">]</span>
-<span class="n">y_pred_african_american</span> <span class="o">=</span> <span class="n">african_american_reduced</span><span class="p">[</span><span class="s1">&#39;Prediction&#39;</span><span class="p">]</span>
-<span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true_african_american</span><span class="p">,</span> <span class="n">y_pred_african_american</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[143]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([[328, 143],
-       [189, 282]], dtype=int64)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[145]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="n">tn</span> <span class="o">+</span> <span class="n">fp</span> <span class="o">+</span> <span class="n">fn</span> <span class="o">+</span> <span class="n">tp</span> 
-<span class="n">percent_fp</span> <span class="o">=</span> <span class="n">fp</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="n">percent_fn</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Confusion Matrix trained on no race for African-American: </span><span class="se">\n</span><span class="s1">Total: </span><span class="si">{total}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Positive: </span><span class="si">{percent_fp}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Negative: </span><span class="si">{percent_fn}</span><span class="s1">&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Confusion Matrix trained on no race for African-American: 
-Total: 942 
-False Positive: 0.15180467091295116 
-False Negative: 0.20063694267515925
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Confusion-Matrix-Loc-by-Hispanic---Trained-and-Tested-on-no-Race">Confusion Matrix Loc by Hispanic - Trained and Tested on no Race<a class="anchor-link" href="#Confusion-Matrix-Loc-by-Hispanic---Trained-and-Tested-on-no-Race">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[147]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">confusion_matrix</span>
-<span class="n">y_true_hispanic</span> <span class="o">=</span> <span class="n">hispanic_reduced</span><span class="p">[</span><span class="s1">&#39;Actual&#39;</span><span class="p">]</span>
-<span class="n">y_pred_hispanic</span> <span class="o">=</span> <span class="n">hispanic_reduced</span><span class="p">[</span><span class="s1">&#39;Prediction&#39;</span><span class="p">]</span>
-<span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true_hispanic</span><span class="p">,</span> <span class="n">y_pred_hispanic</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[147]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([[78, 11],
-       [42, 17]], dtype=int64)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[149]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="n">tn</span> <span class="o">+</span> <span class="n">fp</span> <span class="o">+</span> <span class="n">fn</span> <span class="o">+</span> <span class="n">tp</span> 
-<span class="n">percent_fp</span> <span class="o">=</span> <span class="n">fp</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="n">percent_fn</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Confusion Matrix trained on no race for Hispanic: </span><span class="se">\n</span><span class="s1">Total: </span><span class="si">{total}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Positive: </span><span class="si">{percent_fp}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Negative: </span><span class="si">{percent_fn}</span><span class="s1">&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Confusion Matrix trained on no race for Hispanic: 
-Total: 148 
-False Positive: 0.07432432432432433 
-False Negative: 0.28378378378378377
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Confusion-Matrix-Loc-by-Native-American---Trained-and-Tested-on-no-Race">Confusion Matrix Loc by Native-American - Trained and Tested on no Race<a class="anchor-link" href="#Confusion-Matrix-Loc-by-Native-American---Trained-and-Tested-on-no-Race">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[151]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">confusion_matrix</span>
-<span class="n">y_true_native_american</span> <span class="o">=</span> <span class="n">native_american_reduced</span><span class="p">[</span><span class="s1">&#39;Actual&#39;</span><span class="p">]</span>
-<span class="n">y_pred_native_american</span> <span class="o">=</span> <span class="n">native_american_reduced</span><span class="p">[</span><span class="s1">&#39;Prediction&#39;</span><span class="p">]</span>
-<span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true_native_american</span><span class="p">,</span> <span class="n">y_pred_native_american</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[151]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([[2, 1],
-       [0, 2]], dtype=int64)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[153]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="n">tn</span> <span class="o">+</span> <span class="n">fp</span> <span class="o">+</span> <span class="n">fn</span> <span class="o">+</span> <span class="n">tp</span> 
-<span class="n">percent_fp</span> <span class="o">=</span> <span class="n">fp</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="n">percent_fn</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Confusion Matrix trained on no race for Native American: </span><span class="se">\n</span><span class="s1">Total: </span><span class="si">{total}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Positive: </span><span class="si">{percent_fp}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Negative: </span><span class="si">{percent_fn}</span><span class="s1">&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Confusion Matrix trained on no race for Native American: 
-Total: 5 
-False Positive: 0.2 
-False Negative: 0.0
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Confusion-Matrix-Loc-by-Other---Trained-and-Tested-on-no-Race">Confusion Matrix Loc by Other - Trained and Tested on no Race<a class="anchor-link" href="#Confusion-Matrix-Loc-by-Other---Trained-and-Tested-on-no-Race">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[155]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">confusion_matrix</span>
-<span class="n">y_true_other</span> <span class="o">=</span> <span class="n">other_reduced</span><span class="p">[</span><span class="s1">&#39;Actual&#39;</span><span class="p">]</span>
-<span class="n">y_pred_other</span> <span class="o">=</span> <span class="n">other_reduced</span><span class="p">[</span><span class="s1">&#39;Prediction&#39;</span><span class="p">]</span>
-<span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true_other</span><span class="p">,</span> <span class="n">y_pred_other</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[155]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([[45,  9],
-       [13, 14]], dtype=int64)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[157]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="n">tn</span> <span class="o">+</span> <span class="n">fp</span> <span class="o">+</span> <span class="n">fn</span> <span class="o">+</span> <span class="n">tp</span> 
-<span class="n">percent_fp</span> <span class="o">=</span> <span class="n">fp</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="n">percent_fn</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Confusion Matrix trained on no race for Other: </span><span class="se">\n</span><span class="s1">Total: </span><span class="si">{total}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Positive: </span><span class="si">{percent_fp}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Negative: </span><span class="si">{percent_fn}</span><span class="s1">&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Confusion Matrix trained on no race for Other: 
-Total: 81 
-False Positive: 0.1111111111111111 
-False Negative: 0.16049382716049382
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Confusion-Matrix-Loc-by-Asian---Trained-and-Tested-on-no-Race">Confusion Matrix Loc by Asian - Trained and Tested on no Race<a class="anchor-link" href="#Confusion-Matrix-Loc-by-Asian---Trained-and-Tested-on-no-Race">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[159]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">confusion_matrix</span>
-<span class="n">y_true_asian</span> <span class="o">=</span> <span class="n">asian_reduced</span><span class="p">[</span><span class="s1">&#39;Actual&#39;</span><span class="p">]</span>
-<span class="n">y_pred_asian</span> <span class="o">=</span> <span class="n">asian_reduced</span><span class="p">[</span><span class="s1">&#39;Prediction&#39;</span><span class="p">]</span>
-<span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true_asian</span><span class="p">,</span> <span class="n">y_pred_asian</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[159]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([[2, 2],
-       [4, 2]], dtype=int64)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[161]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="n">tn</span> <span class="o">+</span> <span class="n">fp</span> <span class="o">+</span> <span class="n">fn</span> <span class="o">+</span> <span class="n">tp</span> 
-<span class="n">percent_fp</span> <span class="o">=</span> <span class="n">fp</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="n">percent_fn</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Confusion Matrix trained on no race for Asian: </span><span class="se">\n</span><span class="s1">Total: </span><span class="si">{total}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Positive: </span><span class="si">{percent_fp}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Negative: </span><span class="si">{percent_fn}</span><span class="s1">&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Confusion Matrix trained on no race for Asian: 
-Total: 10 
-False Positive: 0.2 
-False Negative: 0.4
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Adding-Race-In">Adding Race In<a class="anchor-link" href="#Adding-Race-In">&#182;</a></h1>
-</div>
-</div>
-</div></section></section><section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[163]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X_race</span> <span class="o">=</span> <span class="n">reducedDF_with_race_dummies</span><span class="p">[[</span><span class="s1">&#39;juve_fel_count&#39;</span><span class="p">,</span> <span class="s1">&#39;priors_count&#39;</span><span class="p">,</span> <span class="s1">&#39;violence&#39;</span><span class="p">,</span> <span class="s1">&#39;drugs&#39;</span><span class="p">,</span> <span class="s1">&#39;theft&#39;</span><span class="p">,</span> <span class="s1">&#39;arrest_case_no_charge&#39;</span><span class="p">,</span> <span class="s1">&#39;traffic&#39;</span><span class="p">,</span> <span class="s1">&#39;disorderly_conduct&#39;</span><span class="p">,</span> <span class="s1">&#39;sexual_misconduct&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_25 - 45&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_Greater than 45&#39;</span><span class="p">,</span> <span class="s1">&#39;age_cat_Less than 25&#39;</span><span class="p">,</span> <span class="s1">&#39;juv_misd_count&#39;</span><span class="p">,</span> <span class="s1">&#39;prios_count&#39;</span><span class="p">,</span> <span class="s1">&#39;race_African-American&#39;</span><span class="p">,</span> <span class="s1">&#39;race_Asian&#39;</span><span class="p">,</span> <span class="s1">&#39;race_Caucasian&#39;</span><span class="p">,</span> <span class="s1">&#39;race_Hispanic&#39;</span><span class="p">,</span> <span class="s1">&#39;race_Native American&#39;</span><span class="p">,</span> <span class="s1">&#39;race_Other&#39;</span><span class="p">]]</span>
-<span class="n">y_race</span> <span class="o">=</span> <span class="n">reducedDF_with_race_dummies</span><span class="p">[</span><span class="s1">&#39;two_year_recid&#39;</span><span class="p">]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[164]:</div>
+<div class="prompt input_prompt">In&nbsp;[60]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
 <span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">tree</span>
-<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_race</span><span class="p">,</span> <span class="n">y_race</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[166]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Training Data Score: {rf.score(X_train, y_train)}&quot;</span><span class="p">)</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_train_caucasian</span><span class="p">,</span> <span class="n">y_train_caucasian</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Training Data Score: {rf.score(X_train, y_train)}&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Testing Data Score: {rf.score(X_test, y_test)}&quot;</span><span class="p">)</span>
 </pre></div>
 
@@ -14476,8 +13678,8 @@ False Negative: 0.4
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Training Data Score: 0.7412769116555308
-Testing Data Score: 0.6494156928213689
+<pre>Training Data Score: 0.734860883797054
+Testing Data Score: 0.6519607843137255
 </pre>
 </div>
 </div>
@@ -14488,11 +13690,13 @@ Testing Data Score: 0.6494156928213689
 </div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[167]:</div>
+<div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">feature_names</span> <span class="o">=</span> <span class="n">X_race</span><span class="o">.</span><span class="n">columns</span>
-<span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">rf</span><span class="o">.</span><span class="n">feature_importances_</span><span class="p">,</span> <span class="n">feature_names</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_caucasian</span><span class="p">,</span> <span class="n">y_train_caucasian</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_aa</span><span class="p">,</span> <span class="n">y_test_aa</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14505,32 +13709,13 @@ Testing Data Score: 0.6494156928213689
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[167]:</div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[(0.24427884339325995, &#39;prios_count&#39;),
- (0.24311006669084514, &#39;priors_count&#39;),
- (0.0553190172448805, &#39;juv_misd_count&#39;),
- (0.05103036604602411, &#39;age_cat_Less than 25&#39;),
- (0.042137617106945115, &#39;age_cat_Greater than 45&#39;),
- (0.04183160586201874, &#39;juve_fel_count&#39;),
- (0.03945098814882738, &#39;race_African-American&#39;),
- (0.032501894125672094, &#39;drugs&#39;),
- (0.03147150379739599, &#39;theft&#39;),
- (0.031124978554478978, &#39;race_Caucasian&#39;),
- (0.030369013987939737, &#39;age_cat_25 - 45&#39;),
- (0.029761235142181815, &#39;arrest_case_no_charge&#39;),
- (0.026726485744116287, &#39;violence&#39;),
- (0.024482946179348555, &#39;disorderly_conduct&#39;),
- (0.02436665617848097, &#39;traffic&#39;),
- (0.02187777085623065, &#39;race_Hispanic&#39;),
- (0.017770064858644522, &#39;race_Other&#39;),
- (0.007041181042804084, &#39;sexual_misconduct&#39;),
- (0.0032511524261406824, &#39;race_Asian&#39;),
- (0.0020966126137644445, &#39;race_Native American&#39;)]</pre>
+<pre>0.6229641693811075</pre>
 </div>
 
 </div>
@@ -14538,21 +13723,16 @@ Testing Data Score: 0.6494156928213689
 </div>
 </div>
 
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Separate-DF-into-Only-Races-/-Prediction-/-Actual">Separate DF into Only Races / Prediction / Actual<a class="anchor-link" href="#Separate-DF-into-Only-Races-/-Prediction-/-Actual">&#182;</a></h2>
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[170]:</div>
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X_test_see_race</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[[</span><span class="s1">&#39;race_African-American&#39;</span><span class="p">,</span> <span class="s1">&#39;race_Asian&#39;</span><span class="p">,</span> <span class="s1">&#39;race_Caucasian&#39;</span><span class="p">,</span> <span class="s1">&#39;race_Hispanic&#39;</span><span class="p">,</span> <span class="s1">&#39;race_Native American&#39;</span><span class="p">,</span> <span class="s1">&#39;race_Other&#39;</span><span class="p">,</span> <span class="s1">&#39;Prediction&#39;</span><span class="p">,</span> <span class="s1">&#39;Actual&#39;</span><span class="p">]]</span>
-<span class="n">X_test_see_race</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_caucasian</span><span class="p">,</span> <span class="n">y_train_caucasian</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_hispanic</span><span class="p">,</span> <span class="n">y_test_hispanic</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14565,224 +13745,13 @@ Testing Data Score: 0.6494156928213689
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[170]:</div>
+    <div class="prompt output_prompt">Out[37]:</div>
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>race_African-American</th>
-      <th>race_Asian</th>
-      <th>race_Caucasian</th>
-      <th>race_Hispanic</th>
-      <th>race_Native American</th>
-      <th>race_Other</th>
-      <th>Prediction</th>
-      <th>Actual</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1315</th>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1893</th>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>6937</th>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>7021</th>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>4908</th>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Test-Confusion-Matrix-on-AA">Test Confusion Matrix on AA<a class="anchor-link" href="#Test-Confusion-Matrix-on-AA">&#182;</a></h2>
-</div>
-</div>
-</div></section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[171]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">X_test_see_race_aa</span> <span class="o">=</span> <span class="n">X_test_see_race</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">X_test_see_race</span><span class="p">[</span><span class="s1">&#39;race_African-American&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
-<span class="n">X_test_see_race_aa</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[171]:</div>
-
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>race_African-American</th>
-      <th>race_Asian</th>
-      <th>race_Caucasian</th>
-      <th>race_Hispanic</th>
-      <th>race_Native American</th>
-      <th>race_Other</th>
-      <th>Prediction</th>
-      <th>Actual</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>1315</th>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1893</th>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>1894</th>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>800</th>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>2845</th>
-      <td>1</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>0</td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>0.6656101426307448</pre>
 </div>
 
 </div>
@@ -14793,13 +13762,13 @@ Testing Data Score: 0.6494156928213689
 </div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[173]:</div>
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">confusion_matrix</span>
-<span class="n">y_true</span> <span class="o">=</span> <span class="n">X_test_see_race_aa</span><span class="p">[</span><span class="s1">&#39;Actual&#39;</span><span class="p">]</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">X_test_see_race_aa</span><span class="p">[</span><span class="s1">&#39;Prediction&#39;</span><span class="p">]</span>
-<span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_caucasian</span><span class="p">,</span> <span class="n">y_train_caucasian</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_native_american</span><span class="p">,</span> <span class="n">y_test_native_american</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14812,14 +13781,13 @@ Testing Data Score: 0.6494156928213689
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[173]:</div>
+    <div class="prompt output_prompt">Out[38]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([[320, 151],
-       [178, 293]], dtype=int64)</pre>
+<pre>0.8235294117647058</pre>
 </div>
 
 </div>
@@ -14830,13 +13798,13 @@ Testing Data Score: 0.6494156928213689
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[176]:</div>
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="n">tn</span> <span class="o">+</span> <span class="n">fp</span> <span class="o">+</span> <span class="n">fn</span> <span class="o">+</span> <span class="n">tp</span> 
-<span class="n">percent_fp</span> <span class="o">=</span> <span class="n">fp</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="n">percent_fn</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Confusion Matrix for African-American: </span><span class="se">\n</span><span class="s1">Total: </span><span class="si">{total}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Positive: </span><span class="si">{percent_fp}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Negative: </span><span class="si">{percent_fn}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_caucasian</span><span class="p">,</span> <span class="n">y_train_caucasian</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_other</span><span class="p">,</span> <span class="n">y_test_other</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14849,16 +13817,51 @@ Testing Data Score: 0.6494156928213689
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+    <div class="prompt output_prompt">Out[46]:</div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Confusion Matrix for African-American: 
-Total: 942 
-False Positive: 0.1602972399150743 
-False Negative: 0.18895966029723993
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0.6702127659574468</pre>
 </div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[51]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_caucasian</span><span class="p">,</span> <span class="n">y_train_caucasian</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_asian</span><span class="p">,</span> <span class="n">y_test_asian</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[51]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0.78125</pre>
+</div>
+
 </div>
 
 </div>
@@ -14868,56 +13871,23 @@ False Negative: 0.18895966029723993
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Confusion-Matrix-White">Confusion Matrix White<a class="anchor-link" href="#Confusion-Matrix-White">&#182;</a></h2>
+<h1 id="Doing-Tests-With-A-A-Train">Doing Tests With A-A Train<a class="anchor-link" href="#Doing-Tests-With-A-A-Train">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[178]:</div>
+<div class="prompt input_prompt">In&nbsp;[61]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">confusion_matrix</span>
-<span class="n">y_true</span> <span class="o">=</span> <span class="n">X_test_see_race_white</span><span class="p">[</span><span class="s1">&#39;Actual&#39;</span><span class="p">]</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">X_test_see_race_white</span><span class="p">[</span><span class="s1">&#39;Prediction&#39;</span><span class="p">]</span>
-<span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[178]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>array([[286,  80],
-       [138, 107]], dtype=int64)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[181]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="n">tn</span> <span class="o">+</span> <span class="n">fp</span> <span class="o">+</span> <span class="n">fn</span> <span class="o">+</span> <span class="n">tp</span> 
-<span class="n">percent_fp</span> <span class="o">=</span> <span class="n">fp</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="n">percent_fn</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Confusion Matrix for Caucasian: </span><span class="se">\n</span><span class="s1">Total: </span><span class="si">{total}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Positive: </span><span class="si">{percent_fp}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Negative: </span><span class="si">{percent_fn}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="k">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="k">import</span> <span class="n">tree</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X_train_aa</span><span class="p">,</span> <span class="n">y_train_aa</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Training Data Score: {rf.score(X_train, y_train)}&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;Testing Data Score: {rf.score(X_test, y_test)}&quot;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14934,10 +13904,8 @@ False Negative: 0.18895966029723993
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Confusion Matrix for Caucasian: 
-Total: 611 
-False Positive: 0.1309328968903437 
-False Negative: 0.22585924713584288
+<pre>Training Data Score: 0.7285559174809989
+Testing Data Score: 0.6362649294245385
 </pre>
 </div>
 </div>
@@ -14945,23 +13913,16 @@ False Negative: 0.22585924713584288
 </div>
 </div>
 
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Confusion-Matrix-Hispanic">Confusion Matrix Hispanic<a class="anchor-link" href="#Confusion-Matrix-Hispanic">&#182;</a></h2>
-</div>
-</div>
-</div>
+</div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[183]:</div>
+<div class="prompt input_prompt">In&nbsp;[55]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">confusion_matrix</span>
-<span class="n">y_true</span> <span class="o">=</span> <span class="n">X_test_see_race_hispanic</span><span class="p">[</span><span class="s1">&#39;Actual&#39;</span><span class="p">]</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">X_test_see_race_hispanic</span><span class="p">[</span><span class="s1">&#39;Prediction&#39;</span><span class="p">]</span>
-<span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_aa</span><span class="p">,</span> <span class="n">y_train_aa</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_caucasian</span><span class="p">,</span> <span class="n">y_test_caucasian</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14974,14 +13935,13 @@ False Negative: 0.22585924713584288
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[183]:</div>
+    <div class="prompt output_prompt">Out[55]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([[74, 15],
-       [39, 20]], dtype=int64)</pre>
+<pre>0.6482617586912065</pre>
 </div>
 
 </div>
@@ -14992,13 +13952,13 @@ False Negative: 0.22585924713584288
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[185]:</div>
+<div class="prompt input_prompt">In&nbsp;[56]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="n">tn</span> <span class="o">+</span> <span class="n">fp</span> <span class="o">+</span> <span class="n">fn</span> <span class="o">+</span> <span class="n">tp</span> 
-<span class="n">percent_fp</span> <span class="o">=</span> <span class="n">fp</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="n">percent_fn</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Confusion Matrix for Hispanic: </span><span class="se">\n</span><span class="s1">Total: </span><span class="si">{total}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Positive: </span><span class="si">{percent_fp}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Negative: </span><span class="si">{percent_fn}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_aa</span><span class="p">,</span> <span class="n">y_train_aa</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_hispanic</span><span class="p">,</span> <span class="n">y_test_hispanic</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -15011,58 +13971,13 @@ False Negative: 0.22585924713584288
 
 <div class="output_area">
 
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Confusion Matrix for Hispanic: 
-Total: 148 
-False Positive: 0.10135135135135136 
-False Negative: 0.2635135135135135
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Confusion-Matrix-Native-American">Confusion Matrix Native American<a class="anchor-link" href="#Confusion-Matrix-Native-American">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[187]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">confusion_matrix</span>
-<span class="n">y_true</span> <span class="o">=</span> <span class="n">X_test_see_race_native_american</span><span class="p">[</span><span class="s1">&#39;Actual&#39;</span><span class="p">]</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">X_test_see_race_native_american</span><span class="p">[</span><span class="s1">&#39;Prediction&#39;</span><span class="p">]</span>
-<span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[187]:</div>
+    <div class="prompt output_prompt">Out[56]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([[2, 1],
-       [0, 2]], dtype=int64)</pre>
+<pre>0.6862123613312203</pre>
 </div>
 
 </div>
@@ -15070,16 +13985,16 @@ False Negative: 0.2635135135135135
 </div>
 </div>
 
-</div>
+</div></section><section>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[189]:</div>
+<div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="n">tn</span> <span class="o">+</span> <span class="n">fp</span> <span class="o">+</span> <span class="n">fn</span> <span class="o">+</span> <span class="n">tp</span> 
-<span class="n">percent_fp</span> <span class="o">=</span> <span class="n">fp</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="n">percent_fn</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Confusion Matrix for Native American: </span><span class="se">\n</span><span class="s1">Total: </span><span class="si">{total}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Positive: </span><span class="si">{percent_fp}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Negative: </span><span class="si">{percent_fn}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_aa</span><span class="p">,</span> <span class="n">y_train_aa</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_native_american</span><span class="p">,</span> <span class="n">y_test_native_american</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -15092,58 +14007,13 @@ False Negative: 0.2635135135135135
 
 <div class="output_area">
 
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Confusion Matrix for Native American: 
-Total: 5 
-False Positive: 0.2 
-False Negative: 0.0
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Confusion-Matrix-Other">Confusion Matrix Other<a class="anchor-link" href="#Confusion-Matrix-Other">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[191]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">confusion_matrix</span>
-<span class="n">y_true</span> <span class="o">=</span> <span class="n">X_test_see_race_other</span><span class="p">[</span><span class="s1">&#39;Actual&#39;</span><span class="p">]</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">X_test_see_race_other</span><span class="p">[</span><span class="s1">&#39;Prediction&#39;</span><span class="p">]</span>
-<span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[191]:</div>
+    <div class="prompt output_prompt">Out[57]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([[44, 10],
-       [13, 14]], dtype=int64)</pre>
+<pre>0.8235294117647058</pre>
 </div>
 
 </div>
@@ -15154,13 +14024,13 @@ False Negative: 0.0
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[193]:</div>
+<div class="prompt input_prompt">In&nbsp;[58]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="n">tn</span> <span class="o">+</span> <span class="n">fp</span> <span class="o">+</span> <span class="n">fn</span> <span class="o">+</span> <span class="n">tp</span> 
-<span class="n">percent_fp</span> <span class="o">=</span> <span class="n">fp</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="n">percent_fn</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Confusion Matrix for Other: </span><span class="se">\n</span><span class="s1">Total: </span><span class="si">{total}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Positive: </span><span class="si">{percent_fp}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Negative: </span><span class="si">{percent_fn}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_aa</span><span class="p">,</span> <span class="n">y_train_aa</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_other</span><span class="p">,</span> <span class="n">y_test_other</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -15173,58 +14043,13 @@ False Negative: 0.0
 
 <div class="output_area">
 
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Confusion Matrix for Other: 
-Total: 81 
-False Positive: 0.12345679012345678 
-False Negative: 0.16049382716049382
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div></section></section><section><section>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Confusion-Matrix-Asian">Confusion Matrix Asian<a class="anchor-link" href="#Confusion-Matrix-Asian">&#182;</a></h2>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[195]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="k">import</span> <span class="n">confusion_matrix</span>
-<span class="n">y_true</span> <span class="o">=</span> <span class="n">X_test_see_race_other</span><span class="p">[</span><span class="s1">&#39;Actual&#39;</span><span class="p">]</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">X_test_see_race_other</span><span class="p">[</span><span class="s1">&#39;Prediction&#39;</span><span class="p">]</span>
-<span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[195]:</div>
+    <div class="prompt output_prompt">Out[58]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([[2, 2],
-       [3, 3]], dtype=int64)</pre>
+<pre>0.6914893617021277</pre>
 </div>
 
 </div>
@@ -15235,13 +14060,13 @@ False Negative: 0.16049382716049382
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[197]:</div>
+<div class="prompt input_prompt">In&nbsp;[59]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">total</span> <span class="o">=</span> <span class="n">tn</span> <span class="o">+</span> <span class="n">fp</span> <span class="o">+</span> <span class="n">fn</span> <span class="o">+</span> <span class="n">tp</span> 
-<span class="n">percent_fp</span> <span class="o">=</span> <span class="n">fp</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="n">percent_fn</span> <span class="o">=</span> <span class="n">fn</span> <span class="o">/</span> <span class="n">total</span> 
-<span class="nb">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;Confusion Matrix for Asian: </span><span class="se">\n</span><span class="s1">Total: </span><span class="si">{total}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Positive: </span><span class="si">{percent_fp}</span><span class="s1"> </span><span class="se">\n</span><span class="s1">False Negative: </span><span class="si">{percent_fn}</span><span class="s1">&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="k">import</span> <span class="n">RandomForestClassifier</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">rf</span> <span class="o">=</span> <span class="n">rf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_aa</span><span class="p">,</span> <span class="n">y_train_aa</span><span class="p">)</span>
+<span class="n">rf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_asian</span><span class="p">,</span> <span class="n">y_test_asian</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -15254,16 +14079,15 @@ False Negative: 0.16049382716049382
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+    <div class="prompt output_prompt">Out[59]:</div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Confusion Matrix for Asian: 
-Total: 10 
-False Positive: 0.2 
-False Negative: 0.3
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0.71875</pre>
 </div>
+
 </div>
 
 </div>
